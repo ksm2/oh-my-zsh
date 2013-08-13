@@ -15,6 +15,7 @@ compdef _symfony2 sf
 
 #Alias
 alias sf='php app/console'
+alias sfs='php app/console server:run'
 alias sfcl='php app/console cache:clear'
 alias sfroute='php app/console router:debug'
 alias sfgb='php app/console generate:bundle'
