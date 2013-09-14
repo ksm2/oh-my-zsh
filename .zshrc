@@ -42,7 +42,10 @@ zstyle ':completion:*' special-dirs true
 # Which plugins would you like to load? (plugins can be found in ~/.oh-my-zsh/plugins/*)
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
-plugins=(git archlinux colored-man cp extract hsi symfony2)
+plugins=(git archlinux colored-man cp extract hsi symfony2 apache2-macports git-extras coffee jira lol macports grails osx ruby)
+
+# Extended profile
+source ~/.profile
 
 source $ZSH/oh-my-zsh.sh
 
@@ -60,3 +63,4 @@ export EDITOR=$(which vim)
 # ruby
 export PATH=$PATH:~/.gem/ruby/2.0.0/bin
 eval "$(rbenv init -)"
+
