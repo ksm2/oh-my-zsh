@@ -45,13 +45,10 @@ zstyle ':completion:*' special-dirs true
 plugins=(git archlinux colored-man cp extract hsi symfony2 apache2-macports git-extras coffee jira lol macports grails osx ruby)
 
 # Extended profile
-source ~/.profile
+[[ -f ~/.profile ]] && source ~/.profile
+[[ -f ~/.alias ]] && source ~/.alias
 
 source $ZSH/oh-my-zsh.sh
-
-if [ -f $HOME/.alias ]; then
-	source $HOME/.alias
-fi
 
 unsetopt correct_all
 
