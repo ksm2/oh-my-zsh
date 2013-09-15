@@ -1,5 +1,9 @@
 # Path to your oh-my-zsh configuration.
-ZSH=$HOME/.oh-my-zsh
+if test -d $HOME/.oh-my-zsh ; then
+	ZSH=$HOME/.oh-my-zsh
+elif  test -d /etc/zsh/oh-my-zsh ; then
+	ZSH=/etc/zsh/oh-my-zsh
+fi
 
 # Set name of the theme to load.
 # Look in ~/.oh-my-zsh/themes/
@@ -57,7 +61,9 @@ export PATH=$PATH:/usr/local/sbin:/usr/local/bin:/usr/bin:/opt/java/bin:/opt/jav
 
 export EDITOR=$(which vim)
 
-# ruby
-export PATH=$PATH:~/.gem/ruby/2.0.0/bin
-eval "$(rbenv init -)"
+if command -v rbenv > /dev/null; then
+	# ruby
+	export PATH=$PATH:~/.gem/ruby/2.0.0/bin
+	eval "$(rbenv init -)"
+fi
 
