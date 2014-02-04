@@ -54,8 +54,8 @@ function vcs_info() {
 		git_status_icon="${git_status_icon}${GIT_AHEAD}"
 	fi
 
-	stashed=$(git stash show 2>&1 > /dev/null | wc -l)
-	if [ $stashed -gt 0 ]; then
+	stashed=$(git stash show 2>&1 > /dev/null)
+	if [ $? -eq 0 ]; then
 		git_status_icon="${git_status_icon}${GIT_STASHED}"
 	fi
 
