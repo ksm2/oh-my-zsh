@@ -1,0 +1,41 @@
+#compdef renewa
+
+_renewa() {
+	local curcontext="$curcontext" state line
+	local mycontroller
+    typeset -A opt_args
+ 
+    _arguments -s -S \
+        '-c[Specify a controller, default is `index`]:controller:->controller' \
+		'-a[Specify an action, default is `index`]:action:->action'
+
+    case $state in
+
+		(controller)
+			__renewa_controller_list
+		;;
+
+		(action)
+			__renewa_action_list $words[3]
+		;;
+
+   	esac
+}
+
+__renewa_controller_list() {
+	local expl
+	declare -a controller
+
+	controller=($(php $RENEWA/public/index.php -a controllers))
+
+	_wanted controller expl 'controller' compadd $controller
+}
+
+__renewa_action_list() {
+	local expl
+	declare -a action
+
+	action=($(php $RENEWA/public/index.php -c $1 -a actions))
+
+	_wanted action expl 'action' compadd $action
+}

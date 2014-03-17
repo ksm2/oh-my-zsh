@@ -9,8 +9,9 @@ fi
 # Look in ~/.oh-my-zsh/themes/
 # Optionally, if you set this to "random", it'll load a random theme each
 # time that oh-my-zsh is loaded.
-ZSH_THEME="digilist"
-
+ZSH_THEME="agnoster" #digilist
+   
+# show completion menu when number of options is at least 2
 zstyle ':completion:*' special-dirs true
 
 # Example aliases
@@ -43,10 +44,13 @@ zstyle ':completion:*' special-dirs true
 # much faster.
 # DISABLE_UNTRACKED_FILES_DIRTY="true"
 
+# Default user
+DEFAULT_USER="moellers"
+
 # Which plugins would you like to load? (plugins can be found in ~/.oh-my-zsh/plugins/*)
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
-plugins=(git archlinux colored-man cp extract hsi symfony2 apache2-macports git-extras coffee jira lol macports grails osx ruby)
+plugins=(git archlinux colored-man cp extract hsi symfony2 apache2-macports git-extras coffee jira lol macports grails osx ruby renewa)
 
 # Extended profile
 [[ -f ~/.profile ]] && source ~/.profile
@@ -67,3 +71,6 @@ if command -v rbenv > /dev/null; then
 	eval "$(rbenv init -)"
 fi
 
+
+#THIS MUST BE AT THE END OF THE FILE FOR GVM TO WORK!!!
+[[ -s "/Users/moellers/.gvm/bin/gvm-init.sh" ]] && source "/Users/moellers/.gvm/bin/gvm-init.sh"
