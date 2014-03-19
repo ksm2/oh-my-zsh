@@ -64,18 +64,48 @@ function curr_user() {
 	echo "%B${username_color}%n%b${NO_COLOR}@${YELLOW}%m${NO_COLOR}"
 }
 
-function prompt_dir() {
-	current_dir="${PWD/$HOME/~}"
-	b=("${(s/\/)current_dir}")
+prompt_dir() {
+	local started current_dir
+	current_dir=$PWD
 	started=0
+
+	# is git
+	if $(git rev-parse --is-inside-work-tree 2> /dev/null); then
+		git_root=$(git rev-parse --show-toplevel)
+		current_dir="${current_dir/$git_root/"$git_root/ISGITDIRECTORY"}"
+	fi
+
+	# Replace vars
+	myenv=($(env))
+	for i in $myenv; do
+		var_name=${i%%=*}
+		[[ -z $var_name ]] && continue
+		[[ $var_name = "PATH" ]] && continue
+		[[ $var_name = "PWD" ]] && continue
+		[[ $var_name = "OLDPWD" ]] && continue
+		[[ $var_name = "HOME" ]] && continue
+
+		var_content=${i##*=}
+		[[ ! -d $var_content ]] && continue
+
+		old_current_dir=$current_dir
+		current_dir="${current_dir/$var_content/$var_name}"
+
+		[[ $current_dir != $old_current_dir ]] && break
+	done
+
+	current_dir="${current_dir/$HOME/~}"
 
 	IFS='/'; for i in $current_dir; do
 	    if [ $started = 0 ]; then
 	    	[ -z $i ] && continue
 	    	prompt_segment blue white "$i"   
-	    	prompt_vcs 
 	    else
-	    	prompt_segment black default "$i"
+	    	if [[ $i = "ISGITDIRECTORY" ]]; then
+	    		prompt_vcs
+	    	else
+	    		prompt_segment black default "$i"
+	    	fi
 	    fi
 	    started=1
 	done
@@ -84,8 +114,6 @@ function prompt_dir() {
 function prompt_vcs() {
 	# ensure this is a git repository
 	# TODO other VCS (maybe..)
-	$(git rev-parse --is-inside-work-tree 2> /dev/null) || return;
-		
 	git_status=$(git status --porcelain 2> /dev/null)
 	git_status_icon=""
 
