@@ -63,9 +63,10 @@ export EDITOR=$(which vim)
 
 if command -v rbenv > /dev/null; then
 	# ruby
-	export PATH=$PATH:~/.gem/ruby/2.0.0/bin
+	export PATH=$PATH:~/.gem/ruby/2.1.0/bin
 	eval "$(rbenv init -)"
 fi
 
 # :P
 xset -dpms
+setxkbmap de
