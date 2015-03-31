@@ -14,6 +14,7 @@ GIT_DIRTY="${fg[red]}✗"
 GIT_AHEAD="${fg[yellow]}⚡"
 GIT_UNTRACKED="${fg[white]}✭"
 GIT_ADDED="${fg[blue]}✚"
+GIT_STASHED="${fg[blue]}↑"
 
 function curr_user() {
 	if (( EUID == 0 )); then
@@ -52,7 +53,12 @@ function vcs_info() {
 	if [ $unpushed_commits -gt 0 ]; then
 		git_status_icon="${git_status_icon}${GIT_AHEAD}"
 	fi
-	
+
+	stashed=$(git stash show 2>&1 > /dev/null)
+	if [ $? -eq 0 ]; then
+		git_status_icon="${git_status_icon}${GIT_STASHED}"
+	fi
+
 	git_stat=$(git diff --numstat | awk -v magenta="${fg[magenta]}" \
 										-v cyan="${fg[cyan]}" \
 										-v red="${fg[red]}" \
