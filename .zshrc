@@ -9,7 +9,7 @@ fi
 # Look in ~/.oh-my-zsh/themes/
 # Optionally, if you set this to "random", it'll load a random theme each
 # time that oh-my-zsh is loaded.
-ZSH_THEME="cornyphoenix" #digilist
+ZSH_THEME="digilist"
    
 # show completion menu when number of options is at least 2
 zstyle ':completion:*' special-dirs true
