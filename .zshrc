@@ -22,7 +22,7 @@ zstyle ':completion:*' special-dirs true
 # CASE_SENSITIVE="true"
 
 # Comment this out to disable bi-weekly auto-update checks
-# DISABLE_AUTO_UPDATE="true"
+DISABLE_AUTO_UPDATE="true"
 
 # Uncomment to change how often before auto-updates occur? (in days)
 # export UPDATE_ZSH_DAYS=13
@@ -71,6 +71,9 @@ if command -v rbenv > /dev/null; then
 	eval "$(rbenv init -)"
 fi
 
+# :P
+xset -dpms
+setxkbmap de
 
 #THIS MUST BE AT THE END OF THE FILE FOR GVM TO WORK!!!
 [[ -s "/Users/moellers/.gvm/bin/gvm-init.sh" ]] && source "/Users/moellers/.gvm/bin/gvm-init.sh"
