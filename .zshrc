@@ -50,7 +50,7 @@ DEFAULT_USER="moellers"
 # Which plugins would you like to load? (plugins can be found in ~/.oh-my-zsh/plugins/*)
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
-plugins=(git git-flow git-extras colored-man cp extract history symfony2 apache2-macports macports grails osx ruby renewa safe-paste bower composer terminalapp battery meteor gulp)
+plugins=(git git-flow git-extras colored-man cp extract history symfony2 grails osx ruby renewa safe-paste bower composer terminalapp battery meteor gulp)
 
 # Extended profile
 [[ -f ~/.profile ]] && source ~/.profile
