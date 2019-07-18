@@ -40,11 +40,11 @@ function vcs_info() {
 		git_status_color="${GREEN}"
 		git_status_icon="${git_status_icon}${GIT_CLEAN}"
 	fi
-#	if $(echo "$git_status" | grep '^A  ' &> /dev/null); then
-#		git_status_icon="${git_status_icon}${GIT_ADDED}"
-#	elif $(echo "$git_status" | grep '^M  ' &> /dev/null); then
-#		git_status_icon="${git_status_icon}${GIT_ADDED}"
-#	fi
+	if $(echo "$git_status" | grep '^A  ' &> /dev/null); then
+		git_status_icon="${git_status_icon}${GIT_ADDED}"
+	elif $(echo "$git_status" | grep '^M  ' &> /dev/null); then
+		git_status_icon="${git_status_icon}${GIT_ADDED}"
+	fi
 	if $(echo "$git_status" | grep "??" &> /dev/null); then
 		git_status_icon="${git_status_icon}${GIT_UNTRACKED}"
 	fi

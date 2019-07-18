@@ -10,7 +10,7 @@ fi
 # Optionally, if you set this to "random", it'll load a random theme each
 # time that oh-my-zsh is loaded.
 ZSH_THEME="digilist"
-   
+
 # show completion menu when number of options is at least 2
 zstyle ':completion:*' special-dirs true
 
@@ -61,13 +61,13 @@ source $ZSH/oh-my-zsh.sh
 unsetopt correct_all
 
 # Customize to your needs...
-export PATH=$PATH:/usr/local/sbin:/usr/local/bin:/usr/bin:/opt/java/bin:/opt/java/db/bin:/opt/java/jre/bin:/usr/bin/vendor_perl:/usr/bin/core_perl
+export PATH=$PATH:/usr/local/sbin:/usr/local/bin:/usr/bin:/$HOME/.composer/vendor/bin:/usr/bin/vendor_perl:/usr/bin/core_perl
 
 export EDITOR=$(which vim)
 
 if command -v rbenv > /dev/null; then
 	# ruby
-	export PATH=$PATH:~/.gem/ruby/2.0.0/bin
+	export PATH=$PATH:~/.gem/ruby/2.2.0/bin
 	eval "$(rbenv init -)"
 fi
 
