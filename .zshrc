@@ -71,10 +71,6 @@ if command -v rbenv > /dev/null; then
 	eval "$(rbenv init -)"
 fi
 
-# :P
-xset -dpms
-setxkbmap de
-
 #THIS MUST BE AT THE END OF THE FILE FOR GVM TO WORK!!!
 [[ -s "/Users/moellers/.gvm/bin/gvm-init.sh" ]] && source "/Users/moellers/.gvm/bin/gvm-init.sh"
 export PATH="$PATH:$HOME/.rvm/bin" # Add RVM to PATH for scripting
