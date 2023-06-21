@@ -50,7 +50,7 @@ DEFAULT_USER="moellers"
 # Which plugins would you like to load? (plugins can be found in ~/.oh-my-zsh/plugins/*)
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
-plugins=(git git-flow git-extras cp extract history symfony2 safe-paste composer battery gulp yarn z)
+plugins=(git git-flow git-extras cp extract history kubectl mvn node npm osx safe-paste battery yarn z zsh-autosuggestions)
 
 # Extended profile
 [[ -f ~/.profile ]] && source ~/.profile
@@ -74,3 +74,11 @@ fi
 #THIS MUST BE AT THE END OF THE FILE FOR GVM TO WORK!!!
 [[ -s "/Users/moellers/.gvm/bin/gvm-init.sh" ]] && source "/Users/moellers/.gvm/bin/gvm-init.sh"
 export PATH="$PATH:$HOME/.rvm/bin" # Add RVM to PATH for scripting
+export PATH="/opt/homebrew/opt/openjdk@17/bin:$PATH"
+
+# bun completions
+[ -s "/Users/kmoellers/.bun/_bun" ] && source "/Users/kmoellers/.bun/_bun"
+
+# bun
+export BUN_INSTALL="$HOME/.bun"
+export PATH="$BUN_INSTALL/bin:$PATH"
