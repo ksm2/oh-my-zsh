@@ -74,7 +74,6 @@ fi
 #THIS MUST BE AT THE END OF THE FILE FOR GVM TO WORK!!!
 [[ -s "/Users/moellers/.gvm/bin/gvm-init.sh" ]] && source "/Users/moellers/.gvm/bin/gvm-init.sh"
 export PATH="$PATH:$HOME/.rvm/bin" # Add RVM to PATH for scripting
-export PATH="/opt/homebrew/opt/openjdk@17/bin:$PATH"
 
 # bun completions
 [ -s "/Users/kmoellers/.bun/_bun" ] && source "/Users/kmoellers/.bun/_bun"
