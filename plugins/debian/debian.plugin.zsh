@@ -1,13 +1,13 @@
-# Use apt or aptitude if installed, fallback is apt-get
+# Use aptitude or apt if installed, fallback is apt-get
 # You can just set apt_pref='apt-get' to override it.
 
 if [[ -z $apt_pref || -z $apt_upgr ]]; then
-    if [[ -e $commands[apt] ]]; then
-        apt_pref='apt'
-        apt_upgr='upgrade'
-    elif [[ -e $commands[aptitude] ]]; then
+    if [[ -e $commands[aptitude] ]]; then
         apt_pref='aptitude'
         apt_upgr='safe-upgrade'
+    elif [[ -e $commands[apt] ]]; then
+        apt_pref='apt'
+        apt_upgr='upgrade'
     else
         apt_pref='apt-get'
         apt_upgr='upgrade'
@@ -51,13 +51,17 @@ if [[ $use_sudo -eq 1 ]]; then
     alias au="sudo $apt_pref $apt_upgr"
     alias ai="sudo $apt_pref install"
     # Install all packages given on the command line while using only the first word of each line:
-    # acs ... | ail
+    # acse ... | ail
+
     alias ail="sed -e 's/  */ /g' -e 's/ *//' | cut -s -d ' ' -f 1 | xargs sudo $apt_pref install"
     alias ap="sudo $apt_pref purge"
-    alias ar="sudo $apt_pref remove"
+    alias aar="sudo $apt_pref autoremove"
 
     # apt-get only
     alias ads="sudo apt-get dselect-upgrade"
+
+    # apt only
+    alias alu="sudo apt update && apt list -u && sudo apt upgrade"
 
     # Install all .deb files in the current directory.
     # Warning: you will need to put the glob in single quotes if you use:
@@ -66,13 +70,13 @@ if [[ $use_sudo -eq 1 ]]; then
     alias di="sudo dpkg -i"
 
     # Remove ALL kernel images and headers EXCEPT the one in use
-    alias kclean='sudo aptitude remove -P ?and(~i~nlinux-(ima|hea) ?not(~n$(uname -r)))'
+    alias kclean='sudo aptitude remove -P "?and(~i~nlinux-(ima|hea) ?not(~n$(uname -r)))"'
 
 
 # commands using su #########
 else
     alias aac="su -ls '$apt_pref autoclean' root"
-    abd() {
+    function abd() {
         cmd="su -lc '$apt_pref build-dep $@' root"
         print "$cmd"
         eval "$cmd"
@@ -83,29 +87,28 @@ else
     alias adu="su -lc '$apt_pref update && aptitude dist-upgrade' root"
     alias afu="su -lc '$apt-file update'"
     alias au="su -lc '$apt_pref $apt_upgr' root"
-    ai() {
-        cmd="su -lc 'aptitude -P install $@' root"
+    function ai() {
+        cmd="su -lc '$apt_pref install $@' root"
         print "$cmd"
         eval "$cmd"
     }
-    ap() {
-        cmd="su -lc '$apt_pref -P purge $@' root"
+    function ap() {
+        cmd="su -lc '$apt_pref purge $@' root"
         print "$cmd"
         eval "$cmd"
     }
-    ar() {
-        cmd="su -lc '$apt_pref -P remove $@' root"
+    function aar() {
+        cmd="su -lc '$apt_pref autoremove $@' root"
         print "$cmd"
         eval "$cmd"
     }
-
     # Install all .deb files in the current directory
     # Assumes glob_subst is off
     alias dia='su -lc "dpkg -i ./*.deb" root'
     alias di='su -lc "dpkg -i" root'
 
     # Remove ALL kernel images and headers EXCEPT the one in use
-    alias kclean='su -lc "aptitude remove -P ?and(~i~nlinux-(ima|hea) ?not(~n$(uname -r)))" root'
+    alias kclean='su -lc "aptitude remove -P \"?and(~i~nlinux-(ima|hea) ?not(~n$(uname -r)))\"" root'
 fi
 
 # Completion ################################################################
@@ -114,7 +117,7 @@ fi
 # Registers a compdef for $1 that calls $apt_pref with the commands $2
 # To do that it creates a new completion function called _apt_pref_$2
 #
-apt_pref_compdef() {
+function apt_pref_compdef() {
     local f fb
     f="_apt_pref_${2}"
 
@@ -138,7 +141,7 @@ apt_pref_compdef au  "$apt_upgr"
 apt_pref_compdef ai  "install"
 apt_pref_compdef ail "install"
 apt_pref_compdef ap  "purge"
-apt_pref_compdef ar  "remove"
+apt_pref_compdef aar  "autoremove"
 apt_pref_compdef ads "dselect-upgrade"
 
 # Misc. #####################################################################
@@ -151,7 +154,7 @@ alias mydeb='time dpkg-buildpackage -rfakeroot -us -uc'
 
 # Functions #################################################################
 # create a simple script that can be used to 'duplicate' a system
-apt-copy() {
+function apt-copy() {
     print '#!/bin/sh'"\n" > apt-copy.sh
 
     cmd='$apt_pref install'
@@ -173,7 +176,7 @@ apt-copy() {
 #   apt-history rollback
 #   apt-history list
 # Based On: https://linuxcommando.blogspot.com/2008/08/how-to-show-apt-log-history.html
-apt-history () {
+function apt-history() {
   case "$1" in
     install)
       zgrep --no-filename 'install ' $(ls -rt /var/log/dpkg*)
@@ -202,7 +205,7 @@ apt-history () {
 }
 
 # Kernel-package building shortcut
-kerndeb () {
+function kerndeb() {
     # temporarily unset MAKEFLAGS ( '-j3' will fail )
     MAKEFLAGS=$( print - $MAKEFLAGS | perl -pe 's/-j\s*[\d]+//g' )
     print '$MAKEFLAGS set to '"'$MAKEFLAGS'"
@@ -216,10 +219,9 @@ kerndeb () {
 }
 
 # List packages by size
-function apt-list-packages {
+function apt-list-packages() {
     dpkg-query -W --showformat='${Installed-Size} ${Package} ${Status}\n' | \
     grep -v deinstall | \
     sort -n | \
     awk '{print $1" "$2}'
 }
-
