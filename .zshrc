@@ -68,6 +68,7 @@ plugins=(
   safe-paste
   yarn
   z
+  zsh-autosuggestions
 )
 
 # Extended profile
@@ -99,3 +100,16 @@ export PATH="$PATH:$HOME/.rvm/bin" # Add RVM to PATH for scripting
 # bun
 export BUN_INSTALL="$HOME/.bun"
 export PATH="$BUN_INSTALL/bin:$PATH"
+# BEGIN krew
+export PATH="$HOME/.krew/bin:$PATH"
+# END krew
+
+
+# pnpm
+export PNPM_HOME="/Users/kmollers/Library/pnpm"
+case ":$PATH:" in
+  *":$PNPM_HOME:"*) ;;
+  *) export PATH="$PNPM_HOME:$PATH" ;;
+esac
+# pnpm end
+#
